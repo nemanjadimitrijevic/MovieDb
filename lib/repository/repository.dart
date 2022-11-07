@@ -13,10 +13,15 @@ class Repository<T extends HiveObject?, S extends RepositoryBox> {
     box.add(newObject);
   }
 
+  Future<void> put(dynamic key, T? newObject) async {
+    final box = await _boxWrapper.box;
+    box.put(key, newObject);
+  }
+
   Future<void> saveAll(List<T?>? newList) async {
     final box = await _boxWrapper.box;
     newList?.forEach((element) {
-      box.add(element);
+      box.put(element);
     });
   }
 

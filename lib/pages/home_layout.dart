@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/blocs/popular_movies_bloc/popular_movies_bloc.dart';
 import 'package:movies/blocs/popular_movies_bloc/popular_movies_state.dart';
 import 'package:movies/common/colors.dart';
-import 'package:movies/domain/popular_movies.dart';
+import 'package:movies/domain/movie.dart';
 import 'package:movies/widgets/movie_list_item.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -41,12 +41,12 @@ class _HomeLayoutState extends State<HomeLayout> {
         ));
   }
 
-  Widget _buildCard(BuildContext context, PopularMovies model) {
+  Widget _buildCard(BuildContext context, List<Movie>? movies) {
     return ListView.builder(
-      itemCount: model.movies?.length ?? 0,
+      itemCount: movies?.length ?? 0,
       itemBuilder: (context, index) {
-        return model.movies != null
-            ? MovieListItem(movie: model.movies![index])
+        return movies != null
+            ? MovieListItem(movie: movies[index])
             : Container();
       },
     );

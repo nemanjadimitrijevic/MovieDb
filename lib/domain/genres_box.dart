@@ -4,5 +4,5 @@ import 'package:movies/repository/repository_box.dart';
 
 class GenresBox extends RepositoryBox {
   @override
-  var box = Hive.openBox<Genre>('genres_box');
+  var box = Hive.openBox<Genre>("genres_box");
 }
