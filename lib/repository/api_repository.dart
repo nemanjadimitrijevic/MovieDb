@@ -34,6 +34,13 @@ class ApiRepository {
     return await repositoryManager.moviesRepository.getAll();
   }
 
+  Future<Movie> getMovieDetails(int movieId) async {
+    // Get movie details from web
+    var movie = await _service.getMovieDetails(movieId: movieId);
+
+    return movie;
+  }
+
   Future<void> addFavouriteMovie(Movie movie) async {
     await repositoryManager.favouritesRepository.save(movie);
   }

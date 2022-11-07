@@ -1,5 +1,3 @@
-import 'package:hive_flutter/adapters.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:movies/domain/genre.dart';
 import 'package:movies/domain/movie.dart';
 import 'package:movies/repository/favourites_box.dart';
@@ -12,9 +10,6 @@ class RepositoryManager {
   late Repository<Movie, MoviesBox> moviesRepository;
   late Repository<Movie, FavouritesBox> favouritesRepository;
   RepositoryManager() {
-    Hive.registerAdapter(GenreAdapter());
-    Hive.registerAdapter(MovieAdapter());
-
     genresRepository = Repository<Genre, GenresBox>(GenresBox());
     moviesRepository = Repository<Movie, MoviesBox>(MoviesBox());
     favouritesRepository = Repository<Movie, FavouritesBox>(FavouritesBox());

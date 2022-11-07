@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/blocs/popular_movies_bloc/popular_movies_bloc.dart';
 import 'package:movies/blocs/popular_movies_bloc/popular_movies_state.dart';
-import 'package:movies/common/colors.dart';
 import 'package:movies/domain/movie.dart';
+import 'package:movies/ui/widgets/loading_indicator.dart';
 import 'package:movies/ui/widgets/movie_list_item.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -52,6 +52,5 @@ class _HomeLayoutState extends State<HomeLayout> {
     );
   }
 
-  Widget _buildLoading() => const Center(
-      child: CircularProgressIndicator(color: Color(MovieColor.colorPrimary)));
+  Widget _buildLoading() => LoadingIndicator();
 }

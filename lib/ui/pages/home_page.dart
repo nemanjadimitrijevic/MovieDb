@@ -13,7 +13,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
         backgroundColor: const Color(MovieColor.colorBg),
         appBar: AppBar(
           backgroundColor: const Color(MovieColor.colorBg),

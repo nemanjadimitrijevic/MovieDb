@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:movies/domain/genres.dart';
+import 'package:movies/domain/movie.dart';
 import 'package:movies/domain/popular_movies.dart';
 
 class ApiService {
@@ -11,8 +12,7 @@ class ApiService {
   static const String _genresUrl = '${_baseUrl}genre/movie/list';
   static const String _popularMoviesUrl =
       '${_baseUrl}movie/popular?api_key=b8d7f76947904a011286dc732c55234e&language=en_US&page=1';
-  static const String _movieDetailsUrl =
-      '${_baseUrl}movie/508947?api_key=b8d7f76947904a011286dc732c55234e&language=en_US&page=1';
+  static const String _movieDetailsUrl = '${_baseUrl}movie/';
 
   static const _lang = 'en_US';
   static const _token =
@@ -36,5 +36,16 @@ class ApiService {
           'content-type': 'application/json'
         }));
     return PopularMovies.fromJson(response.data);
+  }
+
+  Future<Movie> getMovieDetails({int movieId = 0}) async {
+    Response response = await _dio.request('$_movieDetailsUrl/$movieId',
+        queryParameters: {'language': _lang},
+        options: Options(validateStatus: (_) => true, method: 'GET', headers: {
+          HttpHeaders.authorizationHeader: 'Bearer $_token',
+          'content-type': 'application/json'
+        }));
+    print('RESPONSE -> ${response.realUri}');
+    return Movie.fromJson(response.data);
   }
 }

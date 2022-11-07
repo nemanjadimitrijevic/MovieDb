@@ -1,12 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movies/blocs/genres_bloc/genres_bloc.dart';
 import 'package:movies/blocs/genres_bloc/genres_state.dart';
 import 'package:movies/common/colors.dart';
 import 'package:movies/common/icons.dart';
 import 'package:movies/domain/movie.dart';
+import 'package:movies/navigation/navigation_routes.dart';
 import 'package:movies/ui/widgets/movie_genre_item.dart';
 
 class MovieListItem extends StatefulWidget {
@@ -21,63 +22,67 @@ class MovieListItem extends StatefulWidget {
 class _MovieListItemState extends State<MovieListItem> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(
-            widget.movie.imageUrl(),
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.movie.title ?? "-",
-                  style: const TextStyle(
-                    color: Color(MovieColor.colorText),
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
+    return GestureDetector(
+      child: Container(
+        color: Colors.transparent,
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.network(
+              widget.movie.imageUrl(),
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.movie.title ?? "-",
+                    style: const TextStyle(
+                      color: Color(MovieColor.colorText),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    SvgPicture.asset(MovieSvgIcons.star),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5),
-                      child: Text(
-                        '${widget.movie.voteAverage}/10 IMDb',
-                        style: const TextStyle(
-                          color: Color(MovieColor.colorText),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      SvgPicture.asset(MovieSvgIcons.star),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Text(
+                          '${widget.movie.voteAverage}/10 IMDb',
+                          style: const TextStyle(
+                            color: Color(MovieColor.colorText),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                _setGenres(widget.movie.genreIds)
-              ],
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  _setGenres(widget.movie.genreIds)
+                ],
+              ),
             ),
-          ),
-          IconButton(
-            icon: SvgPicture.asset(MovieSvgIcons.bookmark),
-            highlightColor: const Color(MovieColor.colorHighlight),
-            onPressed: () => {
-              // TODO
-            },
-          )
-        ],
+            IconButton(
+              icon: SvgPicture.asset(MovieSvgIcons.bookmark),
+              highlightColor: const Color(MovieColor.colorHighlight),
+              onPressed: () => {
+                // TODO
+              },
+            )
+          ],
+        ),
       ),
+      onTap: () => {context.pushNamed(movieRouteName, extra: widget.movie.id)},
     );
   }
 
