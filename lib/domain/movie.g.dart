@@ -31,13 +31,14 @@ class MovieAdapter extends TypeAdapter<Movie> {
       video: fields[11] as bool?,
       voteAverage: fields[12] as num?,
       voteCount: fields[13] as int?,
+      genres: (fields[14] as List?)?.cast<Genre>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Movie obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.adult)
       ..writeByte(1)
@@ -65,7 +66,9 @@ class MovieAdapter extends TypeAdapter<Movie> {
       ..writeByte(12)
       ..write(obj.voteAverage)
       ..writeByte(13)
-      ..write(obj.voteCount);
+      ..write(obj.voteCount)
+      ..writeByte(14)
+      ..write(obj.genres);
   }
 
   @override
@@ -99,6 +102,9 @@ Movie _$MovieFromJson(Map<String, dynamic> json) => Movie(
       video: json['video'] as bool?,
       voteAverage: json['vote_average'] as num?,
       voteCount: json['vote_count'] as int?,
+      genres: (json['genres'] as List<dynamic>?)
+          ?.map((e) => Genre.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
@@ -116,4 +122,5 @@ Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
       'video': instance.video,
       'vote_average': instance.voteAverage,
       'vote_count': instance.voteCount,
+      'genres': instance.genres?.map((e) => e.toJson()).toList(),
     };

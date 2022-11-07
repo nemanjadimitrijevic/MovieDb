@@ -3,7 +3,7 @@ import 'package:movies/common/colors.dart';
 import 'package:movies/domain/genre.dart';
 
 class MovieGenreItems extends StatelessWidget {
-  final List<int> genreIds;
+  final List<int?> genreIds;
   final List<Genre?>? genreList;
   const MovieGenreItems(
       {Key? key, required this.genreIds, required this.genreList})

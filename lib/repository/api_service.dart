@@ -39,13 +39,12 @@ class ApiService {
   }
 
   Future<Movie> getMovieDetails({int movieId = 0}) async {
-    Response response = await _dio.request('$_movieDetailsUrl/$movieId',
+    Response response = await _dio.request('$_movieDetailsUrl$movieId',
         queryParameters: {'language': _lang},
         options: Options(validateStatus: (_) => true, method: 'GET', headers: {
           HttpHeaders.authorizationHeader: 'Bearer $_token',
           'content-type': 'application/json'
         }));
-    print('RESPONSE -> ${response.realUri}');
     return Movie.fromJson(response.data);
   }
 }

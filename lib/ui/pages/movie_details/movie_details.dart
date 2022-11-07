@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movies/blocs/genres_bloc/genres_bloc.dart';
+import 'package:movies/blocs/genres_bloc/genres_state.dart';
 import 'package:movies/common/colors.dart';
 import 'package:movies/common/icons.dart';
 import 'package:movies/domain/movie.dart';
@@ -11,11 +13,12 @@ import 'package:movies/ui/pages/movie_details/bloc/movie_details_bloc.dart';
 import 'package:movies/ui/pages/movie_details/bloc/movie_details_event.dart';
 import 'package:movies/ui/pages/movie_details/bloc/movie_details_state.dart';
 import 'package:movies/ui/widgets/loading_indicator.dart';
+import 'package:movies/ui/widgets/movie_genre_item.dart';
 
 class MovieDetails extends StatefulWidget {
   final int movieId;
 
-  MovieDetails({Key? key, required this.movieId}) : super(key: key);
+  const MovieDetails({Key? key, required this.movieId}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _MovieDetailsState();
@@ -60,6 +63,8 @@ class _MovieDetailsState extends State<MovieDetails> {
     return Stack(
       children: [
         Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.network(
               movie.imageUrl(),
@@ -67,12 +72,90 @@ class _MovieDetailsState extends State<MovieDetails> {
               height: 330,
               fit: BoxFit.cover,
             ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        movie.title ?? "-",
+                        style: const TextStyle(
+                          color: Color(MovieColor.colorText),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Row(
+                        children: [
+                          SvgPicture.asset(MovieSvgIcons.star),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: Text(
+                              '${movie.voteAverage}/10 IMDb',
+                              style: const TextStyle(
+                                color: Color(MovieColor.colorText),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      _setGenres(movie.genres?.map((e) => e.id).toList()),
+                      const SizedBox(height: 40),
+                      const Text(
+                        'Description',
+                        style: TextStyle(
+                          color: Color(MovieColor.colorText),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        movie.overview ?? "",
+                        style: const TextStyle(
+                          color: Color(MovieColor.colorText),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
         ),
-        IconButton(
-            icon: SvgPicture.asset(MovieSvgIcons.navBack),
-            onPressed: () => {context.pop()}),
+        Container(
+          margin: const EdgeInsets.only(left: 10),
+          child: IconButton(
+              icon: SvgPicture.asset(MovieSvgIcons.navBack),
+              onPressed: () => {context.pop()}),
+        ),
       ],
+    );
+  }
+
+  Widget _setGenres(List<int?>? genreIds) {
+    if (genreIds == null || genreIds.isEmpty) {
+      return Container();
+    }
+    return BlocBuilder<GenresBloc, GenresState>(
+      builder: (context, state) {
+        if (state is GenresLoaded) {
+          return state.genres != null
+              ? MovieGenreItems(genreIds: genreIds, genreList: state.genres)
+              : Container();
+        }
+        return Container();
+      },
     );
   }
 

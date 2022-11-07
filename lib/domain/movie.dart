@@ -1,5 +1,6 @@
 import 'package:hive_flutter/adapters.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:movies/domain/genre.dart';
 import 'package:movies/repository/api_service.dart';
 
 part 'movie.g.dart';
@@ -63,6 +64,10 @@ class Movie extends HiveObject {
   @HiveField(13)
   int? voteCount;
 
+  @JsonKey(name: 'genres')
+  @HiveField(14)
+  List<Genre>? genres;
+
   Movie(
       {this.adult,
       this.backdropPath,
@@ -77,7 +82,8 @@ class Movie extends HiveObject {
       this.title,
       this.video,
       this.voteAverage,
-      this.voteCount});
+      this.voteCount,
+      this.genres});
 
   String imageUrl() {
     return "${ApiService.imageBaseUrl}$posterPath";
