@@ -13,11 +13,11 @@ class NetworkConnectionBloc
       Emitter<NetworkConnectionState> emit) async {
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       print('STATUS -> $result');
-      if (result == ConnectivityResult.none) {
-        emit(state.copyWith(isConnected: false));
-      } else {
-        emit(state.copyWith(isConnected: true));
-      }
+      // if (result == ConnectivityResult.none) {
+      //   emit(state.copyWith(isConnected: false));
+      // } else {
+      //   emit(state.copyWith(isConnected: true));
+      // }
     });
   }
 }

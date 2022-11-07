@@ -5,7 +5,7 @@ part 'genre.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 @HiveType(typeId: 1)
-class Genre {
+class Genre extends HiveObject {
   @JsonKey(name: 'id')
   @HiveField(0)
   int? id;

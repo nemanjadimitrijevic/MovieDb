@@ -1,5 +1,8 @@
 import 'package:hive_flutter/adapters.dart';
+import 'package:movies/domain/genre.dart';
+import 'package:movies/repository/repository_box.dart';
 
-class GenresBox {
-  var box = Hive.openBox('genres_box');
+class GenresBox extends RepositoryBox {
+  @override
+  var box = Hive.openBox<Genre>('genres_box');
 }

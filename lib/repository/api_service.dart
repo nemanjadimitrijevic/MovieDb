@@ -19,17 +19,22 @@ class ApiService {
       'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOGQ3Zjc2OTQ3OTA0YTAxMTI4NmRjNzMyYzU1MjM0ZSIsInN1YiI6IjYwMzM3ODBiMTEzODZjMDAzZjk0ZmM2YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XYuIrLxvowrkevwKx-KhOiOGZ2Tn-R8tEksXq842kX4';
 
   Future<Genres> getMovieGenres() async {
-    Response response = await _dio.get(_genresUrl);
+    Response response = await _dio.request(_genresUrl,
+        queryParameters: {'language': _lang},
+        options: Options(validateStatus: (_) => true, method: 'GET', headers: {
+          HttpHeaders.authorizationHeader: 'Bearer $_token',
+          'content-type': 'application/json'
+        }));
     return Genres.fromJson(response.data);
   }
 
   Future<PopularMovies> getPopularMovies({int page = 1}) async {
-    Response resp = await _dio.request(_popularMoviesUrl,
+    Response response = await _dio.request(_popularMoviesUrl,
         queryParameters: {'language': _lang, 'page': page.toString()},
         options: Options(validateStatus: (_) => true, method: 'GET', headers: {
           HttpHeaders.authorizationHeader: 'Bearer $_token',
           'content-type': 'application/json'
         }));
-    return PopularMovies.fromJson(resp.data);
+    return PopularMovies.fromJson(response.data);
   }
 }

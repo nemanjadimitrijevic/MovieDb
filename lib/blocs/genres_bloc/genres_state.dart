@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:movies/domain/genres.dart';
+import 'package:movies/domain/genre.dart';
 
 class GenresState extends Equatable {
   const GenresState();
@@ -10,10 +10,8 @@ class GenresState extends Equatable {
 
 class GenresInitial extends GenresState {}
 
-class GenresLoading extends GenresState {}
-
 class GenresLoaded extends GenresState {
-  final Genres genres;
+  final List<Genre?>? genres;
   const GenresLoaded(this.genres);
 }
 

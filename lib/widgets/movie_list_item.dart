@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movies/blocs/genres_bloc/genres_bloc.dart';
+import 'package:movies/blocs/genres_bloc/genres_state.dart';
 import 'package:movies/common/colors.dart';
 import 'package:movies/common/icons.dart';
 import 'package:movies/domain/movie.dart';
@@ -72,6 +75,15 @@ class _MovieListItemState extends State<MovieListItem> {
     if (genreIds == null || genreIds.isEmpty) {
       return Container();
     }
-    return MovieGenreItems(genreIds: genreIds);
+    return BlocBuilder<GenresBloc, GenresState>(
+      builder: (context, state) {
+        if (state is GenresLoaded) {
+          return state.genres != null
+              ? MovieGenreItems(genreIds: genreIds, genreList: state.genres)
+              : Container();
+        }
+        return Container();
+      },
+    );
   }
 }

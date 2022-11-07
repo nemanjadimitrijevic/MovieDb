@@ -1,3 +1,0 @@
-class GeneralBox {
-  var box;
-}

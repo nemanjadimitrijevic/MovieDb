@@ -13,7 +13,7 @@ import 'package:movies/repository/repository_manager.dart';
 
 void main() async {
   await Hive.initFlutter();
-  final _apiRepository = ApiRepository();
+  final _apiRepository = ApiRepository(repositoryManager: RepositoryManager());
   runApp(RepositoryProvider(
       create: (context) => RepositoryManager(),
       child: MultiBlocProvider(

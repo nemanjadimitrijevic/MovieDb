@@ -14,7 +14,6 @@ class GenresBloc extends Bloc<GenresEvent, GenresState> {
   FutureOr<void> _getMovieGenres(
       GenresEvent event, Emitter<GenresState> emit) async {
     try {
-      // emit(GenresLoading());
       final genreList = await apiRepository.getMovieGenres();
       emit(GenresLoaded(genreList));
     } on NetworkError {
