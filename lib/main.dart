@@ -7,9 +7,9 @@ import 'package:movies/blocs/network_connection_bloc/network_connection_bloc.dar
 import 'package:movies/blocs/network_connection_bloc/network_connection_event.dart';
 import 'package:movies/blocs/popular_movies_bloc/popular_movies_bloc.dart';
 import 'package:movies/blocs/popular_movies_bloc/popular_movies_event.dart';
-import 'package:movies/pages/home_page.dart';
 import 'package:movies/repository/api_repository.dart';
 import 'package:movies/repository/repository_manager.dart';
+import 'package:movies/ui/pages/home_page.dart';
 
 void main() async {
   await Hive.initFlutter();

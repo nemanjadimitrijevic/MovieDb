@@ -23,6 +23,7 @@ class ApiRepository {
   }
 
   Future<List<Movie>?> getPopularMovies() async {
+    // Get movies from the web
     var movies = await _service.getPopularMovies();
 
     // Save movies into database

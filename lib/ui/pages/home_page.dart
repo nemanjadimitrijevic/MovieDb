@@ -5,7 +5,7 @@ import 'package:movies/blocs/network_connection_bloc/network_connection_bloc.dar
 import 'package:movies/blocs/network_connection_bloc/network_connection_state.dart';
 import 'package:movies/common/colors.dart';
 import 'package:movies/common/icons.dart';
-import 'package:movies/pages/home_layout.dart';
+import 'package:movies/ui/pages/home_layout.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

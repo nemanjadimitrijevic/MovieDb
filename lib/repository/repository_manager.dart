@@ -1,10 +1,10 @@
 import 'package:hive_flutter/adapters.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:movies/domain/favourites_box.dart';
 import 'package:movies/domain/genre.dart';
-import 'package:movies/domain/genres_box.dart';
 import 'package:movies/domain/movie.dart';
-import 'package:movies/domain/movies_box.dart';
+import 'package:movies/repository/favourites_box.dart';
+import 'package:movies/repository/genres_box.dart';
+import 'package:movies/repository/movies_box.dart';
 import 'package:movies/repository/repository.dart';
 
 class RepositoryManager {

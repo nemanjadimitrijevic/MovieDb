@@ -11,13 +11,13 @@ class MovieGenreItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [_createGenreList()],
-    );
+    return _createGenreList();
   }
 
   Widget _createGenreList() {
-    return Row(children: addGenreItems());
+    return Wrap(
+      children: addGenreItems(),
+    );
   }
 
   List<Widget> addGenreItems() {
@@ -37,7 +37,7 @@ class MovieGenreItems extends StatelessWidget {
 
   Widget _createGenre(String genre) {
     return Container(
-      margin: const EdgeInsets.only(right: 4),
+      margin: const EdgeInsets.only(right: 4, top: 5),
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(4)),
           color: Color(MovieColor.colorPrimaryFaded)),

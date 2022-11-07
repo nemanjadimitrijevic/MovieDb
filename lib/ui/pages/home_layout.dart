@@ -4,7 +4,7 @@ import 'package:movies/blocs/popular_movies_bloc/popular_movies_bloc.dart';
 import 'package:movies/blocs/popular_movies_bloc/popular_movies_state.dart';
 import 'package:movies/common/colors.dart';
 import 'package:movies/domain/movie.dart';
-import 'package:movies/widgets/movie_list_item.dart';
+import 'package:movies/ui/widgets/movie_list_item.dart';
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({Key? key}) : super(key: key);
