@@ -1,16 +1,16 @@
 import 'package:movies/domain/genres.dart';
 import 'package:movies/domain/popular_movies.dart';
-import 'package:movies/resources/api_provider.dart';
+import 'package:movies/repository/api_service.dart';
 
 class ApiRepository {
-  final _provider = ApiProvider();
+  final _service = ApiService();
 
   Future<Genres> getMovieGenres() {
-    return _provider.getMovieGenres();
+    return _service.getMovieGenres();
   }
 
   Future<PopularMovies> getPopularMovies() {
-    return _provider.getPopularMovies();
+    return _service.getPopularMovies();
   }
 }
 

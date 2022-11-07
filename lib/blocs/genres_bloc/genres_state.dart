@@ -8,6 +8,8 @@ class GenresState extends Equatable {
   List<Object?> get props => [];
 }
 
+class GenresInitial extends GenresState {}
+
 class GenresLoading extends GenresState {}
 
 class GenresLoaded extends GenresState {

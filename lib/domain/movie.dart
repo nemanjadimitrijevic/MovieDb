@@ -1,17 +1,66 @@
+import 'package:hive_flutter/adapters.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:movies/repository/api_service.dart';
+
+part 'movie.g.dart';
+
+@JsonSerializable(explicitToJson: true)
+@HiveType(typeId: 3)
 class Movie {
+  @JsonKey(name: 'adult')
+  @HiveField(0)
   bool? adult;
+
+  @JsonKey(name: 'backdrop_path')
+  @HiveField(1)
   String? backdropPath;
+
+  @JsonKey(name: 'genre_ids')
+  @HiveField(2)
   List<int>? genreIds;
+
+  @JsonKey(name: 'id')
+  @HiveField(3)
   int? id;
+
+  @JsonKey(name: 'original_language')
+  @HiveField(4)
   String? originalLanguage;
+
+  @JsonKey(name: 'original_title')
+  @HiveField(5)
   String? originalTitle;
+
+  @JsonKey(name: 'overview')
+  @HiveField(6)
   String? overview;
+
+  @JsonKey(name: 'popularity')
+  @HiveField(7)
   double? popularity;
+
+  @JsonKey(name: 'poster_path')
+  @HiveField(8)
   String? posterPath;
+
+  @JsonKey(name: 'release_date')
+  @HiveField(9)
   String? releaseDate;
+
+  @JsonKey(name: 'title')
+  @HiveField(10)
   String? title;
+
+  @JsonKey(name: 'video')
+  @HiveField(11)
   bool? video;
+
+  @JsonKey(name: 'vote_average')
+  @HiveField(12)
   num? voteAverage;
+
+  @JsonKey(name: 'vote_count')
+  @HiveField(13)
   int? voteCount;
 
   Movie(
@@ -30,39 +79,11 @@ class Movie {
       this.voteAverage,
       this.voteCount});
 
-  Movie.fromJson(Map<String, dynamic> json) {
-    adult = json['adult'];
-    backdropPath = json['backdrop_path'];
-    genreIds = json['genre_ids'].cast<int>();
-    id = json['id'];
-    originalLanguage = json['original_language'];
-    originalTitle = json['original_title'];
-    overview = json['overview'];
-    popularity = json['popularity'];
-    posterPath = json['poster_path'];
-    releaseDate = json['release_date'];
-    title = json['title'];
-    video = json['video'];
-    voteAverage = json['vote_average'];
-    voteCount = json['vote_count'];
+  String imageUrl() {
+    return "${ApiService.imageBaseUrl}$posterPath";
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['adult'] = adult;
-    data['backdrop_path'] = backdropPath;
-    data['genre_ids'] = genreIds;
-    data['id'] = id;
-    data['original_language'] = originalLanguage;
-    data['original_title'] = originalTitle;
-    data['overview'] = overview;
-    data['popularity'] = popularity;
-    data['poster_path'] = posterPath;
-    data['release_date'] = releaseDate;
-    data['title'] = title;
-    data['video'] = video;
-    data['vote_average'] = voteAverage;
-    data['vote_count'] = voteCount;
-    return data;
-  }
+  factory Movie.fromJson(Map<String, dynamic> json) => _$MovieFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MovieToJson(this);
 }
