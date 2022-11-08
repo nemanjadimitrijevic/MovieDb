@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:movies/blocs/genres_bloc/genres_bloc.dart';
-import 'package:movies/blocs/genres_bloc/genres_state.dart';
 import 'package:movies/common/colors.dart';
 import 'package:movies/common/icons.dart';
 import 'package:movies/domain/movie.dart';
 import 'package:movies/repository/api_repository.dart';
 import 'package:movies/repository/repository_manager.dart';
+import 'package:movies/ui/pages/home_page/bloc/genres_bloc.dart';
+import 'package:movies/ui/pages/home_page/bloc/genres_state.dart';
 import 'package:movies/ui/pages/movie_details/bloc/movie_details_bloc.dart';
 import 'package:movies/ui/pages/movie_details/bloc/movie_details_event.dart';
 import 'package:movies/ui/pages/movie_details/bloc/movie_details_state.dart';
@@ -74,9 +74,14 @@ class _MovieDetailsState extends State<MovieDetails> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: Padding(
+                child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+                  decoration: const BoxDecoration(
+                      color: Color(MovieColor.colorBg),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,

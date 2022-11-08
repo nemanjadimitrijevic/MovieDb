@@ -1,5 +1,6 @@
 class MovieColor {
   static const colorBg = 0xff0E1324;
+  static const colorNavBg = 0xff010510;
   static const colorPrimary = 0xffEC9B3E;
   static const colorPrimaryFaded = 0x33EC9B3E; // 33 - 20% alpha
   static const colorSecondary = 0xffF2CF16;

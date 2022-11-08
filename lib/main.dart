@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:movies/blocs/genres_bloc/genres_bloc.dart';
-import 'package:movies/blocs/genres_bloc/genres_event.dart';
-import 'package:movies/blocs/network_connection_bloc/network_connection_bloc.dart';
-import 'package:movies/blocs/network_connection_bloc/network_connection_event.dart';
-import 'package:movies/blocs/popular_movies_bloc/popular_movies_bloc.dart';
-import 'package:movies/blocs/popular_movies_bloc/popular_movies_event.dart';
 import 'package:movies/domain/genre.dart';
 import 'package:movies/domain/movie.dart';
 import 'package:movies/navigation/nav_router.dart';
 import 'package:movies/repository/api_repository.dart';
 import 'package:movies/repository/repository_manager.dart';
+import 'package:movies/ui/pages/home_page/bloc/genres_bloc.dart';
+import 'package:movies/ui/pages/home_page/bloc/genres_event.dart';
+import 'package:movies/ui/pages/home_page/bloc/network_connection_bloc.dart';
+import 'package:movies/ui/pages/home_page/bloc/network_connection_event.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -32,12 +30,6 @@ void main() async {
             create: (context) => GenresBloc(apiRepository: apiRepository)
               ..add(
                 GetMovieGenres(),
-              ),
-          ),
-          BlocProvider<PopularMoviesBloc>(
-            create: (context) => PopularMoviesBloc(apiRepository: apiRepository)
-              ..add(
-                GetPopularMovies(),
               ),
           ),
         ],

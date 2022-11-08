@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:movies/navigation/navigation_routes.dart';
-import 'package:movies/ui/pages/home_page.dart';
+import 'package:movies/ui/pages/home_page/home_page.dart';
 import 'package:movies/ui/pages/movie_details/movie_details.dart';
 
 class NavRouter {

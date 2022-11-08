@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:movies/blocs/genres_bloc/genres_bloc.dart';
-import 'package:movies/blocs/genres_bloc/genres_state.dart';
 import 'package:movies/common/colors.dart';
 import 'package:movies/common/icons.dart';
 import 'package:movies/domain/movie.dart';
 import 'package:movies/navigation/navigation_routes.dart';
+import 'package:movies/ui/pages/home_page/bloc/genres_bloc.dart';
+import 'package:movies/ui/pages/home_page/bloc/genres_state.dart';
 import 'package:movies/ui/widgets/movie_genre_item.dart';
 
 class MovieListItem extends StatefulWidget {

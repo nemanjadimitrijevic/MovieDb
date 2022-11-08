@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
-import 'package:movies/blocs/popular_movies_bloc/popular_movies_event.dart';
-import 'package:movies/blocs/popular_movies_bloc/popular_movies_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/repository/api_repository.dart';
+import 'package:movies/ui/pages/popular_movies_widget/bloc/popular_movies_event.dart';
+import 'package:movies/ui/pages/popular_movies_widget/bloc/popular_movies_state.dart';
 
 class PopularMoviesBloc extends Bloc<PopularMoviesEvent, PopularMoviesState> {
   final ApiRepository apiRepository;

@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies/blocs/network_connection_bloc/network_connection_event.dart';
-import 'package:movies/blocs/network_connection_bloc/network_connection_state.dart';
+import 'package:movies/ui/pages/home_page/bloc/network_connection_event.dart';
+import 'package:movies/ui/pages/home_page/bloc/network_connection_state.dart';
 
 class NetworkConnectionBloc
     extends Bloc<NetworkConnectionEvent, NetworkConnectionState> {

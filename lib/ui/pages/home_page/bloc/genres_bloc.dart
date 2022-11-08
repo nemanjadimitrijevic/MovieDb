@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
-import 'package:movies/blocs/genres_bloc/genres_event.dart';
-import 'package:movies/blocs/genres_bloc/genres_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/repository/api_repository.dart';
+import 'package:movies/ui/pages/home_page/bloc/genres_event.dart';
+import 'package:movies/ui/pages/home_page/bloc/genres_state.dart';
 
 class GenresBloc extends Bloc<GenresEvent, GenresState> {
   final ApiRepository apiRepository;

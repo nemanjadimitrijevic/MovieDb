@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies/blocs/popular_movies_bloc/popular_movies_bloc.dart';
-import 'package:movies/blocs/popular_movies_bloc/popular_movies_state.dart';
 import 'package:movies/domain/movie.dart';
+import 'package:movies/repository/api_repository.dart';
+import 'package:movies/repository/repository_manager.dart';
+import 'package:movies/ui/pages/popular_movies_widget/bloc/popular_movies_bloc.dart';
+import 'package:movies/ui/pages/popular_movies_widget/bloc/popular_movies_event.dart';
+import 'package:movies/ui/pages/popular_movies_widget/bloc/popular_movies_state.dart';
 import 'package:movies/ui/widgets/loading_indicator.dart';
 import 'package:movies/ui/widgets/movie_list_item.dart';
 
-class HomeLayout extends StatefulWidget {
-  const HomeLayout({Key? key}) : super(key: key);
+class PopularMoviesWidget extends StatefulWidget {
+  const PopularMoviesWidget({Key? key}) : super(key: key);
 
   @override
-  State<HomeLayout> createState() => _HomeLayoutState();
+  State<PopularMoviesWidget> createState() => _PopularMoviesWidgetState();
 }
 
-class _HomeLayoutState extends State<HomeLayout> {
+class _PopularMoviesWidgetState extends State<PopularMoviesWidget> {
   @override
   Widget build(BuildContext context) {
     return _buildPopularMoviesList();
   }
 
   Widget _buildPopularMoviesList() {
-    return Container(
-        margin: const EdgeInsets.all(8.0),
+    return BlocProvider<PopularMoviesBloc>(
+        create: (context) => PopularMoviesBloc(
+            apiRepository:
+                ApiRepository(repositoryManager: RepositoryManager()))
+          ..add(
+            GetPopularMovies(),
+          ),
         child: BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
           builder: (context, state) {
             if (state is PopularMoviesInitial) {
