@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +19,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _pages = [const PopularMoviesWidget(), const FavouritesWidget()];
+
+  @override
+  void initState() {
+    super.initState();
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      print('CONNN -> $result');
+    });
+  }
 
   var _selectedIndex = 0;
   @override
@@ -71,11 +80,12 @@ class _HomePageState extends State<HomePage> {
   Widget _buildHomePage() {
     return BlocBuilder<NetworkConnectionBloc, NetworkConnectionState>(
         builder: (context, state) {
+      bool isDisconnected = state is NetworkDisconnected;
       return Stack(
         children: [
           _pages[_selectedIndex],
           Visibility(
-              visible: !state.isConnected,
+              visible: isDisconnected,
               child: Align(
                 alignment: AlignmentDirectional.bottomCenter,
                 child: Container(

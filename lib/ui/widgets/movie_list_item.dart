@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,12 +33,11 @@ class _MovieListItemState extends State<MovieListItem> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              widget.movie.imageUrl(),
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
+            CachedNetworkImage(
+                imageUrl: widget.movie.imageUrl(),
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover),
             const SizedBox(width: 16),
             Expanded(
               child: Column(

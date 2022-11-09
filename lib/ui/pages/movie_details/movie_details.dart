@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -67,12 +68,11 @@ class _MovieDetailsState extends State<MovieDetails> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              movie.imageUrl(),
-              width: double.infinity,
-              height: 330,
-              fit: BoxFit.cover,
-            ),
+            CachedNetworkImage(
+                imageUrl: movie.imageUrl(),
+                width: double.infinity,
+                height: 330,
+                fit: BoxFit.cover),
             Expanded(
               child: SingleChildScrollView(
                 child: Container(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -18,32 +20,37 @@ void main() async {
   final apiRepository = ApiRepository(repositoryManager: RepositoryManager());
   Hive.registerAdapter(GenreAdapter());
   Hive.registerAdapter(MovieAdapter());
-  runApp(RepositoryProvider(
-      create: (context) => RepositoryManager(),
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<NetworkConnectionBloc>(
-            create: (context) => NetworkConnectionBloc()
-              ..add(
-                CheckNetworkConnection(),
-              ),
-          ),
-          BlocProvider<GenresBloc>(
-            create: (context) => GenresBloc(apiRepository: apiRepository)
-              ..add(
-                GetMovieGenres(),
-              ),
-          ),
-          BlocProvider<PopularMoviesBloc>(
-            create: (context) =>
-                PopularMoviesBloc(apiRepository: apiRepository),
-          ),
-          BlocProvider<FavouritesBloc>(
-            create: (context) => FavouritesBloc(apiRepository: apiRepository),
-          ),
-        ],
-        child: MyApp(),
-      )));
+  runZonedGuarded(
+    () => runApp(RepositoryProvider(
+        create: (context) => RepositoryManager(),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<NetworkConnectionBloc>(
+              create: (context) => NetworkConnectionBloc()
+                ..add(
+                  CheckNetworkConnection(),
+                ),
+            ),
+            BlocProvider<GenresBloc>(
+              create: (context) => GenresBloc(apiRepository: apiRepository)
+                ..add(
+                  GetMovieGenres(),
+                ),
+            ),
+            BlocProvider<PopularMoviesBloc>(
+              create: (context) =>
+                  PopularMoviesBloc(apiRepository: apiRepository),
+            ),
+            BlocProvider<FavouritesBloc>(
+              create: (context) => FavouritesBloc(apiRepository: apiRepository),
+            ),
+          ],
+          child: MyApp(),
+        ))),
+    (error, stackTrace) {
+      print(error.toString()); // This is the message I print
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {

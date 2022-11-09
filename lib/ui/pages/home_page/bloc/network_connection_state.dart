@@ -1,13 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-class NetworkConnectionState extends Equatable {
-  final bool isConnected;
-  const NetworkConnectionState({this.isConnected = true});
-
+abstract class NetworkConnectionState extends Equatable {
   @override
-  List<Object?> get props => [isConnected];
-
-  NetworkConnectionState copyWith({bool? isConnected}) {
-    return NetworkConnectionState(isConnected: isConnected ?? this.isConnected);
-  }
+  List<Object?> get props => [];
 }
+
+class NetworkInitial extends NetworkConnectionState {}
+
+class NetworkConnected extends NetworkConnectionState {}
+
+class NetworkDisconnected extends NetworkConnectionState {}
