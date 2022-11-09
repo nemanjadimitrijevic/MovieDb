@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Theme applied to the Android Window while the process is starting when the OS's Dark Mode setting is off -->
-    <style name="Theme.App" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:enforceNavigationBarContrast">false</item>
+    <style name="Theme.App" parent="@android:style/Theme.Light.NoTitleBar">
     </style>
 
     <style name="LaunchTheme" parent="Theme.SplashScreen">

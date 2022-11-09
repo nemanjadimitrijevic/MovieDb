@@ -6,10 +6,12 @@ import 'package:movies/domain/movie.dart';
 import 'package:movies/navigation/nav_router.dart';
 import 'package:movies/repository/api_repository.dart';
 import 'package:movies/repository/repository_manager.dart';
+import 'package:movies/ui/pages/favourites_widget/bloc/favourites_bloc.dart';
 import 'package:movies/ui/pages/home_page/bloc/genres_bloc.dart';
 import 'package:movies/ui/pages/home_page/bloc/genres_event.dart';
 import 'package:movies/ui/pages/home_page/bloc/network_connection_bloc.dart';
 import 'package:movies/ui/pages/home_page/bloc/network_connection_event.dart';
+import 'package:movies/ui/pages/popular_movies_widget/bloc/popular_movies_bloc.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -31,6 +33,13 @@ void main() async {
               ..add(
                 GetMovieGenres(),
               ),
+          ),
+          BlocProvider<PopularMoviesBloc>(
+            create: (context) =>
+                PopularMoviesBloc(apiRepository: apiRepository),
+          ),
+          BlocProvider<FavouritesBloc>(
+            create: (context) => FavouritesBloc(apiRepository: apiRepository),
           ),
         ],
         child: MyApp(),

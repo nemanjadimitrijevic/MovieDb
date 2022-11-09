@@ -1,7 +1,6 @@
-import 'package:hive_flutter/adapters.dart';
 import 'package:movies/repository/repository_box.dart';
 
-class Repository<T extends HiveObject?, S extends RepositoryBox> {
+class Repository<T extends Object?, S extends RepositoryBox> {
   late S _boxWrapper;
 
   Repository(S customBoxWrapper) {
@@ -33,6 +32,16 @@ class Repository<T extends HiveObject?, S extends RepositoryBox> {
   Future<List<T>?> getAll() async {
     final box = await _boxWrapper.box;
     return box.values.toList();
+  }
+
+  Future<void> delete(T? objectToDelete) async {
+    final box = await _boxWrapper.box;
+    await box.delete(objectToDelete);
+  }
+
+  Future<void> deleteKey(dynamic key) async {
+    final box = await _boxWrapper.box;
+    box.delete(key);
   }
 
   Future<void> clear() async {

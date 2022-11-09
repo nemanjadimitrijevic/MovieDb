@@ -8,6 +8,7 @@ import 'package:movies/domain/movie.dart';
 import 'package:movies/navigation/navigation_routes.dart';
 import 'package:movies/ui/pages/home_page/bloc/genres_bloc.dart';
 import 'package:movies/ui/pages/home_page/bloc/genres_state.dart';
+import 'package:movies/ui/widgets/favourites_button.dart';
 import 'package:movies/ui/widgets/movie_genre_item.dart';
 
 class MovieListItem extends StatefulWidget {
@@ -26,6 +27,7 @@ class _MovieListItemState extends State<MovieListItem> {
       child: Container(
         color: Colors.transparent,
         margin: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,18 +69,13 @@ class _MovieListItemState extends State<MovieListItem> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 10),
                   const SizedBox(height: 5),
                   _setGenres(widget.movie.genreIds)
                 ],
               ),
             ),
-            IconButton(
-              icon: SvgPicture.asset(MovieSvgIcons.bookmark),
-              highlightColor: const Color(MovieColor.colorHighlight),
-              onPressed: () => {
-                // TODO
-              },
-            )
+            FavouritesButton(movie: widget.movie)
           ],
         ),
       ),

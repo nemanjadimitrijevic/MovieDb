@@ -48,7 +48,6 @@ class _HomePageState extends State<HomePage> {
                     title: 'Movies',
                     isSelected: _selectedIndex == 0,
                     onPressed: () {
-                      print('Movies pressed');
                       setState(() {
                         _selectedIndex = 0;
                       });
@@ -58,7 +57,6 @@ class _HomePageState extends State<HomePage> {
                     title: 'Favourites',
                     isSelected: _selectedIndex == 1,
                     onPressed: () {
-                      print('Favourites pressed');
                       setState(() {
                         _selectedIndex = 1;
                       });

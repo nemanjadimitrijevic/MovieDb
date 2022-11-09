@@ -12,6 +12,7 @@ import 'package:movies/ui/pages/home_page/bloc/genres_state.dart';
 import 'package:movies/ui/pages/movie_details/bloc/movie_details_bloc.dart';
 import 'package:movies/ui/pages/movie_details/bloc/movie_details_event.dart';
 import 'package:movies/ui/pages/movie_details/bloc/movie_details_state.dart';
+import 'package:movies/ui/widgets/favourites_button.dart';
 import 'package:movies/ui/widgets/loading_indicator.dart';
 import 'package:movies/ui/widgets/movie_genre_item.dart';
 
@@ -86,13 +87,19 @@ class _MovieDetailsState extends State<MovieDetails> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        movie.title ?? "-",
-                        style: const TextStyle(
-                          color: Color(MovieColor.colorText),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            movie.title ?? "-",
+                            style: const TextStyle(
+                              color: Color(MovieColor.colorText),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Spacer(),
+                          FavouritesButton(movie: movie)
+                        ],
                       ),
                       const SizedBox(height: 15),
                       Row(

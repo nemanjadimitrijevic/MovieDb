@@ -41,12 +41,16 @@ class ApiRepository {
     return movie;
   }
 
-  Future<void> addFavouriteMovie(Movie movie) async {
-    await repositoryManager.favouritesRepository.save(movie);
+  Future<List<Movie>?> getFavouriteMovies() async {
+    return await repositoryManager.favouritesRepository.getAll();
   }
 
-  Future<List<Movie>?> getFavouriteMovies() async {
-    return await repositoryManager.moviesRepository.getAll();
+  Future<void> saveFavouriteMovie(Movie movie) async {
+    await repositoryManager.favouritesRepository.put(movie.id, movie);
+  }
+
+  Future<void> deleteFavouriteMovie(int? movieId) async {
+    await repositoryManager.favouritesRepository.deleteKey(movieId);
   }
 }
 

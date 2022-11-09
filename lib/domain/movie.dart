@@ -7,7 +7,7 @@ part 'movie.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 @HiveType(typeId: 3)
-class Movie extends HiveObject {
+class Movie {
   @JsonKey(name: 'adult')
   @HiveField(0)
   bool? adult;

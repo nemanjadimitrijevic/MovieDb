@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/domain/movie.dart';
-import 'package:movies/repository/api_repository.dart';
-import 'package:movies/repository/repository_manager.dart';
 import 'package:movies/ui/pages/popular_movies_widget/bloc/popular_movies_bloc.dart';
 import 'package:movies/ui/pages/popular_movies_widget/bloc/popular_movies_event.dart';
 import 'package:movies/ui/pages/popular_movies_widget/bloc/popular_movies_state.dart';
@@ -19,34 +17,28 @@ class PopularMoviesWidget extends StatefulWidget {
 class _PopularMoviesWidgetState extends State<PopularMoviesWidget> {
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<PopularMoviesBloc>(context).add(GetPopularMovies());
     return _buildPopularMoviesList();
   }
 
   Widget _buildPopularMoviesList() {
-    return BlocProvider<PopularMoviesBloc>(
-        create: (context) => PopularMoviesBloc(
-            apiRepository:
-                ApiRepository(repositoryManager: RepositoryManager()))
-          ..add(
-            GetPopularMovies(),
-          ),
-        child: BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
-          builder: (context, state) {
-            if (state is PopularMoviesInitial) {
-              return _buildLoading();
-            } else if (state is PopularMoviesLoading) {
-              return _buildLoading();
-            } else if (state is PopularMoviesLoaded) {
-              return _buildCard(context, state.movies);
-            }
-            // else if (state is CovidError) {
-            //   return Container();
-            // }
-            else {
-              return Container();
-            }
-          },
-        ));
+    return BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
+      builder: (context, state) {
+        if (state is PopularMoviesInitial) {
+          return _buildLoading();
+        } else if (state is PopularMoviesLoading) {
+          return _buildLoading();
+        } else if (state is PopularMoviesLoaded) {
+          return _buildCard(context, state.movies);
+        }
+        // else if (state is CovidError) {
+        //   return Container();
+        // }
+        else {
+          return Container();
+        }
+      },
+    );
   }
 
   Widget _buildCard(BuildContext context, List<Movie>? movies) {
