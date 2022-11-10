@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:movies/domain/genres.dart';
 import 'package:movies/domain/movie.dart';
-import 'package:movies/domain/popular_movies.dart';
 
 class ApiService {
   static final Dio _dio = Dio();
@@ -28,14 +27,20 @@ class ApiService {
     return Genres.fromJson(response.data);
   }
 
-  Future<PopularMovies> getPopularMovies({int page = 1}) async {
-    Response response = await _dio.request(_popularMoviesUrl,
-        queryParameters: {'language': _lang, 'page': page.toString()},
-        options: Options(validateStatus: (_) => true, method: 'GET', headers: {
-          HttpHeaders.authorizationHeader: 'Bearer $_token',
-          'content-type': 'application/json'
-        }));
-    return PopularMovies.fromJson(response.data);
+  Future<dynamic> getPopularMovies({int page = 1}) async {
+    try {
+      return await _dio.request(_popularMoviesUrl,
+          queryParameters: {'language': _lang, 'page': page.toString()},
+          options:
+              Options(validateStatus: (_) => true, method: 'GET', headers: {
+            HttpHeaders.authorizationHeader: 'Bearer $_token',
+            'content-type': 'application/json'
+          }));
+      // return PopularMovies.fromJson(response.data);
+    } catch (e) {
+      return e;
+      print("aldkfjlakdsjflajsdflkjasdlfkja -> $e");
+    }
   }
 
   Future<Movie> getMovieDetails({int movieId = 0}) async {

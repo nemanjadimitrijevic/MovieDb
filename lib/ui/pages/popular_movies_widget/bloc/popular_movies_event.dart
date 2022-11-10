@@ -7,4 +7,10 @@ abstract class PopularMoviesEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetPopularMovies extends PopularMoviesEvent {}
+class GetPopularMovies extends PopularMoviesEvent {
+  final bool isLoadMore;
+  const GetPopularMovies({required this.isLoadMore});
+
+  @override
+  List<Object?> get props => [isLoadMore];
+}

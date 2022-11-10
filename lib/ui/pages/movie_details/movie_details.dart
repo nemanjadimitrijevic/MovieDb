@@ -6,8 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:movies/common/colors.dart';
 import 'package:movies/common/icons.dart';
 import 'package:movies/domain/movie.dart';
-import 'package:movies/repository/api_repository.dart';
-import 'package:movies/repository/repository_manager.dart';
 import 'package:movies/ui/pages/home_page/bloc/genres_bloc.dart';
 import 'package:movies/ui/pages/home_page/bloc/genres_state.dart';
 import 'package:movies/ui/pages/movie_details/bloc/movie_details_bloc.dart';
@@ -27,6 +25,14 @@ class MovieDetails extends StatefulWidget {
 }
 
 class _MovieDetailsState extends State<MovieDetails> {
+  Movie? _movie = Movie();
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<MovieDetailsBloc>(context).add(GetMovieDetails());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,29 +43,21 @@ class _MovieDetailsState extends State<MovieDetails> {
   }
 
   Widget _buildMovieDetailsBloc() {
-    return BlocProvider<MovieDetailsBloc>(
-        create: (context) => MovieDetailsBloc(
-            apiRepository:
-                ApiRepository(repositoryManager: RepositoryManager()),
-            movieId: widget.movieId)
-          ..add(
-            GetMovieDetails(),
-          ),
-        child: BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
-          builder: (context, state) {
-            if (state is MovieDetailsLoading) {
-              _buildLoading();
-            } else if (state is MovieDetailsLoaded) {
-              return _buildMovieDetails(state.movie);
-            }
-            // TODO - error handling
-            return Container();
-          },
-        ));
+    return BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
+      builder: (context, state) {
+        if (state is MovieDetailsLoading) {
+          _buildLoading();
+        } else if (state is MovieDetailsLoaded) {
+          _movie = state.movie;
+        }
+        // TODO - error handling
+        return _buildMovieDetails();
+      },
+    );
   }
 
-  Widget _buildMovieDetails(Movie? movie) {
-    if (movie == null) {
+  Widget _buildMovieDetails() {
+    if (_movie == null) {
       return Container();
     }
     return Stack(
@@ -69,7 +67,7 @@ class _MovieDetailsState extends State<MovieDetails> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CachedNetworkImage(
-                imageUrl: movie.imageUrl(),
+                imageUrl: _movie!.imageUrl(),
                 width: double.infinity,
                 height: 330,
                 fit: BoxFit.cover),
@@ -90,7 +88,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                       Row(
                         children: [
                           Text(
-                            movie.title ?? "-",
+                            _movie!.title ?? "-",
                             style: const TextStyle(
                               color: Color(MovieColor.colorText),
                               fontSize: 20,
@@ -98,7 +96,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                             ),
                           ),
                           const Spacer(),
-                          FavouritesButton(movie: movie)
+                          FavouritesButton(movie: _movie!)
                         ],
                       ),
                       const SizedBox(height: 15),
@@ -108,7 +106,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                           Padding(
                             padding: const EdgeInsets.only(left: 5),
                             child: Text(
-                              '${movie.voteAverage}/10 IMDb',
+                              '${_movie!.voteAverage}/10 IMDb',
                               style: const TextStyle(
                                 color: Color(MovieColor.colorText),
                                 fontSize: 12,
@@ -119,7 +117,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      _setGenres(movie.genres?.map((e) => e.id).toList()),
+                      _setGenres(_movie!.genres?.map((e) => e.id).toList()),
                       const SizedBox(height: 40),
                       const Text(
                         'Description',
@@ -131,7 +129,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        movie.overview ?? "",
+                        _movie!.overview ?? "",
                         style: const TextStyle(
                           color: Color(MovieColor.colorText),
                           fontSize: 13,

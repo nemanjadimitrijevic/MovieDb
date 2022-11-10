@@ -12,9 +12,22 @@ class PopularMoviesInitial extends PopularMoviesState {}
 
 class PopularMoviesLoading extends PopularMoviesState {}
 
+class PopularMoviesLoadMore extends PopularMoviesState {}
+
+class PopularMoviesLoadMoreFinished extends PopularMoviesState {
+  final List<Movie>? movies;
+  const PopularMoviesLoadMoreFinished(this.movies);
+
+  @override
+  List<Object?> get props => [movies];
+}
+
 class PopularMoviesLoaded extends PopularMoviesState {
   final List<Movie>? movies;
   const PopularMoviesLoaded(this.movies);
+
+  @override
+  List<Object?> get props => [movies];
 }
 
 class PopularMoviesError extends PopularMoviesState {}

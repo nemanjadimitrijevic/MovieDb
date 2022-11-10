@@ -1,5 +1,6 @@
 import 'package:movies/domain/genre.dart';
 import 'package:movies/domain/movie.dart';
+import 'package:movies/domain/popular_movies.dart';
 import 'package:movies/repository/api_service.dart';
 import 'package:movies/repository/repository_manager.dart';
 
@@ -22,15 +23,16 @@ class ApiRepository {
     return repositoryManager.genresRepository.getAll();
   }
 
-  Future<List<Movie>?> getPopularMovies() async {
+  Future<dynamic> getPopularMovies(int page) async {
     // Get movies from the web
-    var movies = await _service.getPopularMovies();
-
-    // Save movies into database
-    movies.movies?.forEach((element) async {
-      await repositoryManager.moviesRepository.put(element.id, element);
-    });
-
+    var response = await _service.getPopularMovies(page: page);
+    if (response.statusCode == 200) {
+      final movies = PopularMovies.fromJson(response.data);
+      // Save movies into database
+      movies.movies?.forEach((element) async {
+        await repositoryManager.moviesRepository.save(element);
+      });
+    }
     return await repositoryManager.moviesRepository.getAll();
   }
 
