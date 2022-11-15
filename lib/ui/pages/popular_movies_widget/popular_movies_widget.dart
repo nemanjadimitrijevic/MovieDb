@@ -16,15 +16,18 @@ class PopularMoviesWidget extends StatefulWidget {
 }
 
 class _PopularMoviesWidgetState extends State<PopularMoviesWidget> {
-  List<Movie>? _movieList = [];
+  List<Movie>? _movieList;
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
+    // Movies repo cleaning is for testing purposes only
+    // In production ready app, this line should be removed.
     RepositoryManager().moviesRepository.clear();
     BlocProvider.of<PopularMoviesBloc>(context)
-        .add(const GetPopularMovies(isLoadMore: false));
+      ..page = 1
+      ..add(const GetPopularMovies(isLoadMore: false));
   }
 
   @override
@@ -54,7 +57,7 @@ class _PopularMoviesWidgetState extends State<PopularMoviesWidget> {
             BlocProvider.of<PopularMoviesBloc>(context).isFetching = false;
           }
         } else if (state is PopularMoviesError) {
-          // TODO
+          // TODO - error handling
           return Container();
         }
         return _buildList(context);

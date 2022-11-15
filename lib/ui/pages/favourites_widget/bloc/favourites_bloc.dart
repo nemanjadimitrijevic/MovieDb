@@ -40,15 +40,11 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
 
   Future<void> _deleteFavouriteMovie(
       FavouritesEvent event, Emitter<FavouritesState> emit) async {
-    try {
-      emit(FavouritesLoading());
-      if (event is DeleteFavoriteMovie) {
-        await apiRepository.deleteFavouriteMovie(event.movieId);
-        final movies = await apiRepository.getFavouriteMovies();
-        emit(FavouritesLoaded(movies));
-      }
-    } on NetworkError {
-      emit(FavouritesError());
+    emit(FavouritesLoading());
+    if (event is DeleteFavoriteMovie) {
+      await apiRepository.deleteFavouriteMovie(event.movieId);
+      final movies = await apiRepository.getFavouriteMovies();
+      emit(FavouritesLoaded(movies));
     }
   }
 }

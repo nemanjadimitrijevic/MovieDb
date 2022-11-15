@@ -15,6 +15,7 @@ class FavouritesWidget extends StatefulWidget {
 }
 
 class _FavouritesWidgetState extends State<FavouritesWidget> {
+  List<Movie>? _favorites;
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<FavouritesBloc>(context).add(GetFavourites());
@@ -29,19 +30,16 @@ class _FavouritesWidgetState extends State<FavouritesWidget> {
         } else if (state is FavouritesLoading) {
           return _buildLoading();
         } else if (state is FavouritesLoaded) {
-          return _buildCard(context, state.favourites);
-        }
-        // else if (state is CovidError) {
-        //   return Container();
-        // }
-        else {
+          _favorites = state.favourites;
+        } else if (state is FavouritesError) {
           return Container();
         }
+        return _buildList(context, _favorites);
       },
     );
   }
 
-  Widget _buildCard(BuildContext context, List<Movie>? movies) {
+  Widget _buildList(BuildContext context, List<Movie>? movies) {
     return ListView.builder(
       itemCount: movies?.length ?? 0,
       itemBuilder: (context, index) {

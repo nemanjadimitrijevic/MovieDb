@@ -1,6 +1,7 @@
 import 'package:movies/domain/genre.dart';
 import 'package:movies/domain/movie.dart';
 import 'package:movies/domain/popular_movies.dart';
+import 'package:movies/repository/api_response.dart';
 import 'package:movies/repository/api_service.dart';
 import 'package:movies/repository/repository_manager.dart';
 
@@ -23,24 +24,30 @@ class ApiRepository {
     return repositoryManager.genresRepository.getAll();
   }
 
-  Future<dynamic> getPopularMovies(int page) async {
+  Future<List<Movie>?> getPopularMovies(int page) async {
     // Get movies from the web
-    var response = await _service.getPopularMovies(page: page);
-    if (response.statusCode == 200) {
-      final movies = PopularMovies.fromJson(response.data);
-      // Save movies into database
-      movies.movies?.forEach((element) async {
-        await repositoryManager.moviesRepository.save(element);
+    final response = await _service.getPopularMovies(page: page);
+    // Save movies into database if the response was successful
+    if (response.status == Status.completed) {
+      final PopularMovies? popularMovies = response.data;
+      popularMovies?.movies?.forEach((movie) async {
+        await repositoryManager.moviesRepository.save(movie);
       });
     }
     return await repositoryManager.moviesRepository.getAll();
   }
 
-  Future<Movie> getMovieDetails(int movieId) async {
+  Future<Movie?> getMovieDetails(int movieId) async {
     // Get movie details from web
-    var movie = await _service.getMovieDetails(movieId: movieId);
-
-    return movie;
+    var response = await _service.getMovieDetails(movieId: movieId);
+    if (response.status == Status.completed) {
+      final Movie? movie = response.data;
+      repositoryManager.moviesRepository.put(movie?.id, movie);
+      return movie;
+    }
+    final List<Movie>? allMovies =
+        await repositoryManager.moviesRepository.getAll();
+    return allMovies?.firstWhere((element) => element.id == movieId);
   }
 
   Future<List<Movie>?> getFavouriteMovies() async {

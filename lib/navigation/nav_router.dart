@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:movies/navigation/navigation_routes.dart';
 import 'package:movies/ui/pages/home_page/home_page.dart';
-import 'package:movies/ui/pages/movie_details/movie_details.dart';
+import 'package:movies/ui/pages/movie_details/movie_details_page.dart';
 
 class NavRouter {
   late GoRouter _router;
@@ -30,7 +30,7 @@ class NavRouter {
               pageBuilder: (context, state) => NoTransitionPage<void>(
                   key: state.pageKey,
                   name: movieRouteName,
-                  child: MovieDetails(movieId: state.extra as int)))
+                  child: MovieDetailsPage(movieId: state.extra as int)))
         ]);
   }
 }

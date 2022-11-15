@@ -10,7 +10,7 @@ import 'package:movies/navigation/navigation_routes.dart';
 import 'package:movies/ui/pages/home_page/bloc/genres_bloc.dart';
 import 'package:movies/ui/pages/home_page/bloc/genres_state.dart';
 import 'package:movies/ui/widgets/favourites_button.dart';
-import 'package:movies/ui/widgets/movie_genre_item.dart';
+import 'package:movies/ui/widgets/movie_genre_items.dart';
 
 class MovieListItem extends StatefulWidget {
   final Movie movie;

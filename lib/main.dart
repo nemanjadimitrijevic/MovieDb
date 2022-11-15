@@ -13,6 +13,7 @@ import 'package:movies/ui/pages/home_page/bloc/genres_bloc.dart';
 import 'package:movies/ui/pages/home_page/bloc/genres_event.dart';
 import 'package:movies/ui/pages/home_page/bloc/network_connection_bloc.dart';
 import 'package:movies/ui/pages/home_page/bloc/network_connection_event.dart';
+import 'package:movies/ui/pages/movie_details/bloc/movie_details_bloc.dart';
 import 'package:movies/ui/pages/popular_movies_widget/bloc/popular_movies_bloc.dart';
 
 void main() async {
@@ -40,6 +41,10 @@ void main() async {
             BlocProvider<PopularMoviesBloc>(
               create: (context) =>
                   PopularMoviesBloc(apiRepository: apiRepository),
+            ),
+            BlocProvider<MovieDetailsBloc>(
+              create: (context) =>
+                  MovieDetailsBloc(apiRepository: apiRepository),
             ),
             BlocProvider<FavouritesBloc>(
               create: (context) => FavouritesBloc(apiRepository: apiRepository),

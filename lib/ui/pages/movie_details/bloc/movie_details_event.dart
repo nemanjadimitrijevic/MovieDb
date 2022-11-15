@@ -7,4 +7,10 @@ abstract class MovieDetailsEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetMovieDetails extends MovieDetailsEvent {}
+class GetMovieDetails extends MovieDetailsEvent {
+  final int movieId;
+  const GetMovieDetails({required this.movieId});
+
+  @override
+  List<Object?> get props => [movieId];
+}

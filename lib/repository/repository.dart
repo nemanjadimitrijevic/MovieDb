@@ -1,3 +1,4 @@
+import 'package:hive_flutter/adapters.dart';
 import 'package:movies/repository/repository_box.dart';
 
 class Repository<T extends Object?, S extends RepositoryBox> {
@@ -13,20 +14,18 @@ class Repository<T extends Object?, S extends RepositoryBox> {
   }
 
   Future<void> put(dynamic key, T? newObject) async {
-    final box = await _boxWrapper.box;
+    final Box box = await _boxWrapper.box;
     box.put(key, newObject);
   }
 
-  Future<void> saveAll(List<T?>? newList) async {
-    final box = await _boxWrapper.box;
-    newList?.forEach((element) {
-      box.put(element);
-    });
+  Future<void> saveAll(List<T?> newList) async {
+    final Box box = await _boxWrapper.box;
+    box.putAll(newList.asMap());
   }
 
-  Future<T?> get() async {
+  Future<T?> get(dynamic key) async {
     final box = await _boxWrapper.box;
-    return box.values;
+    return box.get(key);
   }
 
   Future<List<T>?> getAll() async {
